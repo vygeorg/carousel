@@ -7,7 +7,132 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/css/glide.core.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/css/glide.theme.min.css">
   <style>
+    body {<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3D Carousel</title>
+  <style>
     body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background: #f7f7f7;
+      font-family: Arial, sans-serif;
+    }
+
+    .carousel {
+      position: relative;
+      width: 300px;
+      height: 300px;
+      perspective: 1000px;
+    }
+
+    .carousel__inner {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      transform-style: preserve-3d;
+      animation: spin 10s linear infinite;
+    }
+
+    .carousel__inner:hover {
+      animation-play-state: paused;
+      cursor: grab;
+    }
+
+    .carousel__item {
+      position: absolute;
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: #ccc;
+      line-height: 80px;
+      text-align: center;
+      font-size: 14px;
+      font-weight: bold;
+      transform-origin: 150px;
+    }
+
+    .carousel__item img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+    }
+
+    .carousel__item.center {
+      width: 120px;
+      height: 120px;
+      transform: translateZ(150px);
+    }
+
+    @keyframes spin {
+      from {
+        transform: rotateY(0deg);
+      }
+      to {
+        transform: rotateY(360deg);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="carousel">
+    <div class="carousel__inner" id="carousel">
+      <div class="carousel__item" style="transform: rotateY(0deg) translateZ(150px);">
+        <img src="https://via.placeholder.com/80/FF5733/ffffff?text=1" alt="Image 1">
+      </div>
+      <div class="carousel__item" style="transform: rotateY(60deg) translateZ(150px);">
+        <img src="https://via.placeholder.com/80/33FF57/ffffff?text=2" alt="Image 2">
+      </div>
+      <div class="carousel__item" style="transform: rotateY(120deg) translateZ(150px);">
+        <img src="https://via.placeholder.com/80/3357FF/ffffff?text=3" alt="Image 3">
+      </div>
+      <div class="carousel__item" style="transform: rotateY(180deg) translateZ(150px);">
+        <img src="https://via.placeholder.com/80/FF33A1/ffffff?text=4" alt="Image 4">
+      </div>
+      <div class="carousel__item" style="transform: rotateY(240deg) translateZ(150px);">
+        <img src="https://via.placeholder.com/80/FFFF33/ffffff?text=5" alt="Image 5">
+      </div>
+      <div class="carousel__item" style="transform: rotateY(300deg) translateZ(150px);">
+        <img src="https://via.placeholder.com/80/33FFFF/ffffff?text=6" alt="Image 6">
+      </div>
+      <div class="carousel__item center">
+        <img src="https://via.placeholder.com/120/000000/ffffff?text=Center" alt="Center Image">
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const carousel = document.getElementById('carousel');
+    let isDragging = false;
+    let startX;
+    let rotation = 0;
+
+    carousel.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      startX = e.clientX;
+      carousel.style.animation = 'none';
+    });
+
+    document.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      const delta = e.clientX - startX;
+      startX = e.clientX;
+      rotation += delta / 5;
+      carousel.style.transform = `rotateY(${rotation}deg)`;
+    });
+
+    document.addEventListener('mouseup', () => {
+      isDragging = false;
+    });
+  </script>
+</body>
+</html>
+
       font-family: Arial, sans-serif;
       display: flex;
       justify-content: center;
